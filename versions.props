@@ -1,0 +1,12 @@
+com.github.ben-manes.caffeine:* = 3.0.6
+com.google.guava:guava = 31.1-jre
+com.google.protobuf:* = 3.21.5
+com.palantir.conjure:* = 4.32.0
+io.swagger.core.v3:* = 2.2.2
+com.palantir.safe-logging:* = 1.26.0
+com.palantir.tritium:* = 0.52.0
+org.assertj:assertj-core = 3.23.1
+org.junit.jupiter:* = 5.9.1
+org.mockito:* = 4.4.0
+info.picocli:picocli = 4.6.3
+com.fasterxml.jackson.*:* = 2.13.4

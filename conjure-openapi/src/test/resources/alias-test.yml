@@ -1,0 +1,18 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      StringAlias:
+        alias: string
+      DatetimeAlias:
+        alias: datetime
+      IntegerAlias:
+        alias: integer
+      DoubleAlias:
+        alias: double
+      BooleanAlias:
+        alias: boolean
+      UuidAlias:
+        alias: uuid
+      RidAlias:
+        alias: rid

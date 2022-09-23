@@ -1,0 +1,21 @@
+openapi: "3.0.1"
+components:
+  schemas:
+    BooleanAlias:
+      type: "boolean"
+    DatetimeAlias:
+      type: "string"
+      format: "datetime"
+    DoubleAlias:
+      type: "number"
+      format: "float"
+    IntegerAlias:
+      type: "integer"
+      format: "int32"
+    RidAlias:
+      type: "string"
+    StringAlias:
+      type: "string"
+    UuidAlias:
+      type: "string"
+      format: "uuid"

@@ -1,0 +1,21 @@
+name: Update Deps
+on:
+  # allow manual triggers
+  workflow_dispatch: {}
+  # run every day at 10am
+  schedule:
+    - cron: '0 10 * * *'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: ./.github/custom-actions/setup-gradle
+      - uses: markelliot/update-gradle-deps@v1
+        with:
+          push-to-repo-token: ${{ secrets.EULER_REPO_TOKEN }}
+          commit-user: ferozco
+          commit-email: felipe@theoremlp.com

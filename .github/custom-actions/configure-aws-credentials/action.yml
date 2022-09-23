@@ -1,0 +1,21 @@
+name: '"Configure AWS Credentials" Action For GitHub Actions'
+inputs:
+  role-to-assume:
+    required: true
+  aws-region:
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ${{ inputs.aws-region }}
+        role-duration-seconds: 10800
+    - name: Setup credentials in ~/.aws
+      shell: bash
+      run: ./.github/custom-actions/configure-aws-credentials/create_dotaws_dir.sh
+    - name: Remove AWS credentials from ~/.aws
+      uses: webiny/action-post-run@2.0.1
+      with:
+        run: rm -rf ~/.aws

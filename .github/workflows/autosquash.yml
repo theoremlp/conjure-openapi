@@ -1,0 +1,25 @@
+name: autosquash
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - labeled
+      - unlabeled
+      - ready_for_review
+jobs:
+  autosquash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: theoremlp/autosquash@v1
+        with:
+          github-token: ${{ secrets.EULER_REPO_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          squash-commit-title: "${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})"
+          squash-commit-message: "${{ github.event.pull_request.body }}"
+          do-not-merge-label: "do not merge"
+          required-label: "automerge"
+

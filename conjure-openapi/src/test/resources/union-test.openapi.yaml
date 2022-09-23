@@ -1,0 +1,80 @@
+openapi: "3.0.1"
+components:
+  schemas:
+    AnObject:
+      required:
+        - "fieldOne"
+        - "fieldTwo"
+      type: "object"
+      properties:
+        fieldOne:
+          type: "integer"
+          format: "int32"
+        fieldTwo:
+          type: "string"
+    ObjectUnion:
+      discriminator:
+        propertyName: "type"
+      oneOf:
+        - $ref: "#/components/schemas/someIntegerWrapper"
+        - $ref: "#/components/schemas/someObjectWrapper"
+    PrimitiveUnion:
+      discriminator:
+        propertyName: "type"
+      oneOf:
+        - $ref: "#/components/schemas/doubleTypeWrapper"
+        - $ref: "#/components/schemas/integerTypeWrapper"
+        - $ref: "#/components/schemas/stringTypeWrapper"
+    doubleTypeWrapper:
+      required:
+        - "type"
+        - "doubleType"
+      type: "object"
+      properties:
+        doubleType:
+          type: "number"
+          format: "float"
+        type:
+          type: "string"
+    integerTypeWrapper:
+      required:
+        - "type"
+        - "integerType"
+      type: "object"
+      properties:
+        integerType:
+          type: "integer"
+          format: "int32"
+        type:
+          type: "string"
+    someIntegerWrapper:
+      required:
+        - "type"
+        - "someInteger"
+      type: "object"
+      properties:
+        someInteger:
+          type: "integer"
+          format: "int32"
+        type:
+          type: "string"
+    someObjectWrapper:
+      required:
+        - "type"
+        - "someObject"
+      type: "object"
+      properties:
+        someObject:
+          $ref: "#/components/schemas/AnObject"
+        type:
+          type: "string"
+    stringTypeWrapper:
+      required:
+        - "type"
+        - "stringType"
+      type: "object"
+      properties:
+        stringType:
+          type: "string"
+        type:
+          type: "string"

@@ -1,0 +1,28 @@
+name: 'Get AWS secret'
+description: Load the string value of an AWS secret
+inputs:
+  secret-id:
+    description: The secret to load
+    required: true
+  secret-name:
+    description: the name of the secret env var
+    required: true
+  output:
+    description: The output location for the secret
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Create output dir
+      shell: bash
+      run: mkdir -p $(dirname "${{ inputs.output }}")
+    - uses: abhilash1in/aws-secrets-manager-action@v2.1.0
+      with:
+        secrets: ${{ inputs.secret-id }}
+    - name: write secret to file
+      shell: bash
+      run: echo "$${{ inputs.secret-name }}" > "${{ inputs.output }}"
+    - name: use error detail on failure
+      if: ${{ failure() }}
+      shell: bash
+      run: cat error.txt

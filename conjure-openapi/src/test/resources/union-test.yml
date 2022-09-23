@@ -1,0 +1,17 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      PrimitiveUnion:
+        union:
+          integerType: integer
+          doubleType: double
+          stringType: string
+      AnObject:
+        fields:
+          fieldOne: integer
+          fieldTwo: string
+      ObjectUnion:
+        union:
+          someObject: AnObject
+          someInteger: integer

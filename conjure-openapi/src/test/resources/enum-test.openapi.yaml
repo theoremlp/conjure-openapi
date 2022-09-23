@@ -1,0 +1,10 @@
+openapi: "3.0.1"
+components:
+  schemas:
+    Enumeration:
+      type: "string"
+      enum:
+        - "A"
+        - "B"
+        - "C"
+        - "D"

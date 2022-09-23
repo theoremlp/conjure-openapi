@@ -1,0 +1,12 @@
+openapi: "3.0.1"
+components:
+  schemas:
+    DoubleSet:
+      type: "array"
+      items:
+        type: "number"
+        format: "float"
+    StringSet:
+      type: "array"
+      items:
+        type: "string"

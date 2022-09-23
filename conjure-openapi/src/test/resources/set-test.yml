@@ -1,0 +1,8 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      StringSet:
+        alias: set<string>
+      DoubleSet:
+        alias: set<double>

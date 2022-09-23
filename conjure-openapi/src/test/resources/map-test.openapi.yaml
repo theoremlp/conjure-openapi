@@ -1,0 +1,26 @@
+openapi: "3.0.1"
+components:
+  schemas:
+    ObjectMap:
+      type: "object"
+      additionalProperties:
+        $ref: "#/components/schemas/PrimitiveObject"
+    PrimitiveObject:
+      required:
+        - "double_field"
+        - "integer_field"
+        - "string_field"
+      type: "object"
+      properties:
+        double_field:
+          type: "number"
+          format: "float"
+        integer_field:
+          type: "integer"
+          format: "int32"
+        string_field:
+          type: "string"
+    StringMap:
+      type: "object"
+      additionalProperties:
+        type: "string"

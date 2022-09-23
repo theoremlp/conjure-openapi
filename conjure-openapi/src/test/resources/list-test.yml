@@ -1,0 +1,8 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      StringList:
+        alias: list<string>
+      DoubleList:
+        alias: list<double>

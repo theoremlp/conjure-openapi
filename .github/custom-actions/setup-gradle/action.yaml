@@ -1,0 +1,22 @@
+name: 'Setup Gradle environment'
+description: Configures an environment to run Gradle tasks
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+    - uses: actions/cache@v3
+      with:
+        path: ~/.gradle/wrapper
+        key: gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+    - uses: actions/cache@v3
+      with:
+        path: ~/.gradle/caches
+        key: gradle-cache-v1-${{ hashFiles('versions.lock') }}-${{ hashFiles('build.gradle') }}
+    - name: Report gradle cache size
+      shell: bash
+      run: |
+        mkdir -p ~/.gradle/caches
+        du -hs ~/.gradle/caches

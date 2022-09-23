@@ -1,0 +1,19 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      PrimitiveObject:
+        fields:
+          string_field: string
+          integer_field: integer
+          double_field: double
+      ReferenceObject:
+        fields:
+          primitive_field: string
+          reference_field: PrimitiveObject
+      ObjectWithOptionals:
+        fields:
+          required_primitive_field: string
+          required_reference_field: PrimitiveObject
+          optional_primitive_field: optional<string>
+          optional_reference_field: optional<PrimitiveObject>

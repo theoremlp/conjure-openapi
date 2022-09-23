@@ -1,0 +1,32 @@
+apply plugin: 'application'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+application {
+    mainClass = 'com.theoremlp.conjure.openapi.OpenApiCli'
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    implementation 'com.google.guava:guava'
+    implementation 'com.palantir.conjure:conjure-api-objects'
+    implementation 'com.palantir.conjure:conjure-generator-common'
+    implementation 'info.picocli:picocli'
+    implementation 'io.swagger.core.v3:swagger-models'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'com.palantir.conjure:conjure-core'
+}
+
+distTar.compression = Compression.GZIP
+distZip.enabled = false
+
+publishing {
+    publications {
+        dist(MavenPublication) {
+            artifact distTar
+        }
+    }
+}

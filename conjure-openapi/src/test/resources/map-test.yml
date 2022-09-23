@@ -1,0 +1,13 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      PrimitiveObject:
+        fields:
+          string_field: string
+          integer_field: integer
+          double_field: double
+      StringMap:
+        alias: map<string, string>
+      ObjectMap:
+        alias: map<string, PrimitiveObject>

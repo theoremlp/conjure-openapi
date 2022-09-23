@@ -1,0 +1,42 @@
+openapi: "3.0.1"
+components:
+  schemas:
+    ObjectWithOptionals:
+      required:
+        - "required_primitive_field"
+        - "required_reference_field"
+      type: "object"
+      properties:
+        optional_primitive_field:
+          type: "string"
+        optional_reference_field:
+          $ref: "#/components/schemas/PrimitiveObject"
+        required_primitive_field:
+          type: "string"
+        required_reference_field:
+          $ref: "#/components/schemas/PrimitiveObject"
+    PrimitiveObject:
+      required:
+        - "double_field"
+        - "integer_field"
+        - "string_field"
+      type: "object"
+      properties:
+        double_field:
+          type: "number"
+          format: "float"
+        integer_field:
+          type: "integer"
+          format: "int32"
+        string_field:
+          type: "string"
+    ReferenceObject:
+      required:
+        - "primitive_field"
+        - "reference_field"
+      type: "object"
+      properties:
+        primitive_field:
+          type: "string"
+        reference_field:
+          $ref: "#/components/schemas/PrimitiveObject"

@@ -1,0 +1,3 @@
+rootProject.name = 'conjure-openapi-root'
+
+include 'conjure-openapi'
