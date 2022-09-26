@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: Run CI Steps
-    runs-on: thm-eks-prod
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
@@ -58,13 +58,3 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - uses: ./.github/custom-actions/setup-gradle
-      - uses: ./.github/custom-actions/configure-aws-credentials
-        with:
-          role-to-assume: ${{ secrets.CI_GITHUB_ACTIONS_ROLE_ARN }}
-          aws-region: us-west-1
-      - uses: aws-actions/amazon-ecr-login@v1
-      - uses: ./.github/custom-actions/get-aws-secret
-        with:
-          secret-id: "prod/kube/config"
-          secret-name: "PROD_KUBE_CONFIG"
-          output: ${{ env.KUBECONFIG }}
