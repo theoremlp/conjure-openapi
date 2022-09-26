@@ -1,6 +1,7 @@
 apply plugin: 'application'
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 application {
     mainClass = 'com.theoremlp.conjure.openapi.OpenApiCli'
@@ -25,8 +26,32 @@ distZip.enabled = false
 
 publishing {
     publications {
-        dist(MavenPublication) {
+        mavenTgz(MavenPublication) {
             artifact distTar
+            suppressPomMetadataWarningsFor("javadocElements")
+            pom {
+                name = "conjure-openapi"
+                description = "Conjure generator for OpenApi"
+                url = "https://github.com/theoremlp/conjure-openapi"
+                licenses {
+                    license {
+                        name = "Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0"
+                    }
+                }
+                scm {
+                    connection = "scm:git:https://github.com/theoremlp/conjure-openapi.git"
+                    developerConnection = "scm:git:https://github.com/theoremlp/conjure-openapi.git"
+                    url = "https://github.com/theoremlp/conjure-openapi"
+                }
+            }
         }
     }
+}
+
+signing {
+    def signingKey = System.env.SIGNING_KEY
+    def signingPassword = System.env.SIGNING_PASSWORD
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications
 }
