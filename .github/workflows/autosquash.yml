@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: theoremlp/autosquash@v1
         with:
-          github-token: ${{ secrets.EULER_REPO_TOKEN }}
+          github-token: ${{ secrets.PUB_UPDATES_TOKEN }}
           pull-request-number: ${{ github.event.pull_request.number }}
           squash-commit-title: "${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})"
           squash-commit-message: "${{ github.event.pull_request.body }}"
