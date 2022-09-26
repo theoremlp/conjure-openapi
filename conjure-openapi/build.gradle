@@ -39,6 +39,13 @@ publishing {
                         url = "https://www.apache.org/licenses/LICENSE-2.0"
                     }
                 }
+                developers {
+                    developer {
+                        id "theoremlp"
+                        name  "TheoremLp"
+                        email "clip@theoremlp.com"
+                    }
+                }
                 scm {
                     connection = "scm:git:https://github.com/theoremlp/conjure-openapi.git"
                     developerConnection = "scm:git:https://github.com/theoremlp/conjure-openapi.git"
