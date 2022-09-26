@@ -12,14 +12,14 @@ components:
         - "string_field"
       type: "object"
       properties:
-        double_field:
-          type: "number"
-          format: "float"
+        string_field:
+          type: "string"
         integer_field:
           type: "integer"
           format: "int32"
-        string_field:
-          type: "string"
+        double_field:
+          type: "number"
+          format: "float"
     StringMap:
       type: "object"
       additionalProperties:

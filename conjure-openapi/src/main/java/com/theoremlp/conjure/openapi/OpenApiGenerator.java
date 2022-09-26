@@ -16,6 +16,7 @@
 
 package com.theoremlp.conjure.openapi;
 
+import com.google.common.collect.ImmutableMap;
 import com.palantir.conjure.spec.AliasDefinition;
 import com.palantir.conjure.spec.ConjureDefinition;
 import com.palantir.conjure.spec.EnumDefinition;
@@ -35,8 +36,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class OpenApiGenerator {
@@ -56,13 +55,7 @@ public final class OpenApiGenerator {
                         .properties(value.getFields().stream()
                                 .map(elt -> Map.entry(
                                         elt.getFieldName().get(), elt.getType().accept(TYPE_VISITOR)))
-                                .collect(Collectors.toMap(
-                                        Entry::getKey,
-                                        Entry::getValue,
-                                        (_a, _b) -> {
-                                            throw new IllegalStateException();
-                                        },
-                                        TreeMap::new)))));
+                                .collect(ImmutableMap.toImmutableMap(Entry::getKey, Entry::getValue)))));
     }
 
     private static Stream<Entry<String, Schema<?>>> convertUnion(UnionDefinition value) {
@@ -79,13 +72,7 @@ public final class OpenApiGenerator {
                                                                 elt.getFieldName()
                                                                         .get(),
                                                                 elt.getType().accept(TYPE_VISITOR)))
-                                                .collect(Collectors.toMap(
-                                                        Entry::getKey,
-                                                        Entry::getValue,
-                                                        (_a, _b) -> {
-                                                            throw new IllegalStateException();
-                                                        },
-                                                        TreeMap::new)))
+                                                .collect(ImmutableMap.toImmutableMap(Entry::getKey, Entry::getValue)))
                                         .required(List.of(
                                                 "type", elt.getFieldName().get())))),
                 Stream.of(Map.entry(
@@ -143,13 +130,7 @@ public final class OpenApiGenerator {
                                         }
                                     });
                                 })
-                                .collect(Collectors.toMap(
-                                        Entry::getKey,
-                                        Entry::getValue,
-                                        (_a, _b) -> {
-                                            throw new IllegalStateException();
-                                        },
-                                        TreeMap::new))));
+                                .collect(ImmutableMap.toImmutableMap(Entry::getKey, Entry::getValue))));
     }
 
     private OpenApiGenerator() {}
