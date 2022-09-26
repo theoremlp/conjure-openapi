@@ -32,10 +32,10 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.Discriminator;
 import io.swagger.v3.oas.models.media.Schema;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,7 +62,7 @@ public final class OpenApiGenerator {
                                         (_a, _b) -> {
                                             throw new IllegalStateException();
                                         },
-                                        TreeMap::new)))));
+                                        LinkedHashMap::new)))));
     }
 
     private static Stream<Entry<String, Schema<?>>> convertUnion(UnionDefinition value) {
@@ -85,7 +85,7 @@ public final class OpenApiGenerator {
                                                         (_a, _b) -> {
                                                             throw new IllegalStateException();
                                                         },
-                                                        TreeMap::new)))
+                                                        LinkedHashMap::new)))
                                         .required(List.of(
                                                 "type", elt.getFieldName().get())))),
                 Stream.of(Map.entry(
@@ -149,7 +149,7 @@ public final class OpenApiGenerator {
                                         (_a, _b) -> {
                                             throw new IllegalStateException();
                                         },
-                                        TreeMap::new))));
+                                        LinkedHashMap::new))));
     }
 
     private OpenApiGenerator() {}
