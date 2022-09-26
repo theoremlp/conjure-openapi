@@ -41,9 +41,9 @@ publishing {
                 }
                 developers {
                     developer {
-                        id "theoremlp"
-                        name  "TheoremLp"
-                        email "clip@theoremlp.com"
+                        id = "theoremlp"
+                        name = "TheoremLp"
+                        email = "clip@theoremlp.com"
                     }
                 }
                 scm {
