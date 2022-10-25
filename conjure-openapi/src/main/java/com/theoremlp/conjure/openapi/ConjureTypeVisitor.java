@@ -27,7 +27,8 @@ import com.palantir.conjure.spec.TypeName;
 import com.palantir.logsafe.Safe;
 import io.swagger.v3.oas.models.media.Schema;
 
-public final class ConjureTypeVisitor implements Type.Visitor<Schema<?>> {
+public enum ConjureTypeVisitor implements Type.Visitor<Schema<?>> {
+    INSTANCE;
 
     private static final PrimitiveType.Visitor<Schema<?>> PRIMITIVE_VISITOR = new ConjurePrimitiveTypeVisitor();
 
