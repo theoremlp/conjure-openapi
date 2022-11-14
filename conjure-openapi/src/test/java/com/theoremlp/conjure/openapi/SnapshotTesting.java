@@ -17,13 +17,10 @@ package com.theoremlp.conjure.openapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.google.common.io.CharStreams;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public final class SnapshotTesting {
 
@@ -35,28 +32,11 @@ public final class SnapshotTesting {
         }
     }
 
-    public static String readFromResource(String path) {
-        try {
-            return CharStreams.toString(
-                    new InputStreamReader(SnapshotTesting.class.getResourceAsStream(path), StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public static void validateGeneratorOutput(Path file, String content) throws IOException {
+        if (Boolean.valueOf(System.getProperty("recreate", "false"))) {
+            Files.writeString(file, content);
         }
-    }
-
-    public static void validateGeneratorOutput(List<Path> files, Path outputDir) throws IOException {
-        validateGeneratorOutput(files, outputDir, "");
-    }
-
-    public static void validateGeneratorOutput(List<Path> files, Path outputDir, String suffix) throws IOException {
-        for (Path file : files) {
-            Path output = outputDir.resolve(file.getFileName() + suffix);
-            if (Boolean.valueOf(System.getProperty("recreate", "false"))) {
-                Files.deleteIfExists(output);
-                Files.copy(file, output);
-            }
-            assertThat(readFromFile(file)).isEqualTo(readFromFile(output));
-        }
+        assertThat(readFromFile(file)).isEqualTo(content);
     }
 
     private SnapshotTesting() {}

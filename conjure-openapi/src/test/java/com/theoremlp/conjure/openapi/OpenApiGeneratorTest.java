@@ -16,74 +16,46 @@
 
 package com.theoremlp.conjure.openapi;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 import com.google.common.collect.ImmutableList;
 import com.palantir.conjure.defs.Conjure;
 import com.palantir.conjure.spec.ConjureDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.media.Schema;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.jupiter.api.Test;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class OpenApiGeneratorTest {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper(new YAMLFactory()
-                    .enable(Feature.INDENT_ARRAYS_WITH_INDICATOR)
-                    .disable(Feature.WRITE_DOC_START_MARKER))
-            .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-            .enable(SerializationFeature.INDENT_OUTPUT)
-            .addMixIn(Schema.class, SchemaMixin.class);
-
     @TempDir
     Path tempDir;
 
-    private void compareOutputsForPrefix(String prefix) throws IOException {
+    private void compareOutputsForPrefix(String prefix) throws IOException {}
+
+    static List<String> getInputs() {
+        try (Stream<Path> list = Files.list(Path.of("src/test/resources"))) {
+            return list.filter(path -> path.getFileName().toString().endsWith("test.yml"))
+                    .map(path -> com.google.common.io.Files.getNameWithoutExtension(
+                            path.getFileName().toString()))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("getInputs")
+    void testConversion(String prefix) throws IOException {
         ConjureDefinition conjureDefinition =
                 Conjure.parse(ImmutableList.of(new File("src/test/resources/" + prefix + ".yml")));
         OpenAPI api = OpenApiGenerator.generate(conjureDefinition);
-        OBJECT_MAPPER.writeValue(tempDir.resolve(prefix + ".openapi.yaml").toFile(), api);
-        SnapshotTesting.validateGeneratorOutput(
-                ImmutableList.of(Path.of("src/test/resources/" + prefix + ".openapi.yaml")), tempDir);
-    }
 
-    @Test
-    void testAlias() throws IOException {
-        compareOutputsForPrefix("alias-test");
-    }
-
-    @Test
-    void testEnum() throws IOException {
-        compareOutputsForPrefix("enum-test");
-    }
-
-    @Test
-    void testObject() throws IOException {
-        compareOutputsForPrefix("object-test");
-    }
-
-    @Test
-    void testList() throws IOException {
-        compareOutputsForPrefix("list-test");
-    }
-
-    @Test
-    void testSet() throws IOException {
-        compareOutputsForPrefix("set-test");
-    }
-
-    @Test
-    void testMap() throws IOException {
-        compareOutputsForPrefix("map-test");
-    }
-
-    @Test
-    void testUnion() throws IOException {
-        compareOutputsForPrefix("union-test");
+        String content = Mapper.OBJECT_MAPPER.writeValueAsString(api);
+        SnapshotTesting.validateGeneratorOutput(Path.of("src/test/resources/" + prefix + ".openapi.yaml"), content);
     }
 }

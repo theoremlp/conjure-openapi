@@ -18,7 +18,6 @@ package com.theoremlp.conjure.openapi;
 
 import com.google.common.collect.ImmutableMap;
 import com.palantir.conjure.spec.AliasDefinition;
-import com.palantir.conjure.spec.ConjureDefinition;
 import com.palantir.conjure.spec.EnumDefinition;
 import com.palantir.conjure.spec.EnumValueDefinition;
 import com.palantir.conjure.spec.FieldDefinition;
@@ -38,9 +37,9 @@ import java.util.stream.Stream;
 
 final class ObjectGenerator {
 
-    static Components generateComponents(ConjureDefinition conjureDefinition) {
+    static Components generateComponents(List<TypeDefinition> typeDefinitions) {
         return new Components()
-                .schemas(conjureDefinition.getTypes().stream()
+                .schemas(typeDefinitions.stream()
                         .flatMap(ObjectGenerator::convertTypeDefinition)
                         .collect(ImmutableMap.toImmutableMap(Entry::getKey, Entry::getValue)));
     }
