@@ -2,6 +2,7 @@ openapi: "3.0.1"
 paths:
   /body:
     post:
+      description: "Endpoint documentation"
       operationId: "ExampleService#body"
       requestBody:
         content:

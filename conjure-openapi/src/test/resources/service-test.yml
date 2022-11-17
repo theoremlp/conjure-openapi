@@ -13,6 +13,7 @@ services:
     default-auth: none
     endpoints:
       body:
+        docs: Endpoint documentation
         http: POST /body
         args:
           body: Body
