@@ -35,8 +35,6 @@ class OpenApiGeneratorTest {
     @TempDir
     Path tempDir;
 
-    private void compareOutputsForPrefix(String prefix) throws IOException {}
-
     static List<String> getInputs() {
         try (Stream<Path> list = Files.list(Path.of("src/test/resources"))) {
             return list.filter(path -> path.getFileName().toString().endsWith("test.yml"))

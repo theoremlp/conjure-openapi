@@ -126,17 +126,17 @@ final class ServiceGenerator {
             }
 
             @Override
-            public String visitHeader(HeaderParameterType value) {
+            public String visitHeader(HeaderParameterType _value) {
                 return "header";
             }
 
             @Override
-            public String visitPath(PathParameterType value) {
+            public String visitPath(PathParameterType _value) {
                 return "path";
             }
 
             @Override
-            public String visitQuery(QueryParameterType value) {
+            public String visitQuery(QueryParameterType _value) {
                 return "query";
             }
 
@@ -166,12 +166,12 @@ final class ServiceGenerator {
     private static SecurityRequirement toSecurityRequirement(AuthType auth) {
         return auth.accept(new Visitor<>() {
             @Override
-            public SecurityRequirement visitHeader(HeaderAuthType value) {
+            public SecurityRequirement visitHeader(HeaderAuthType _value) {
                 return new SecurityRequirement().addList(BEARER_AUTH);
             }
 
             @Override
-            public SecurityRequirement visitCookie(CookieAuthType value) {
+            public SecurityRequirement visitCookie(CookieAuthType _value) {
                 throw new IllegalStateException("Cookie auth is not supported");
             }
 
