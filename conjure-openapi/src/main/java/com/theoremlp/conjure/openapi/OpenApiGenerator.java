@@ -22,7 +22,9 @@ import io.swagger.v3.oas.models.OpenAPI;
 public final class OpenApiGenerator {
 
     static OpenAPI generate(ConjureDefinition conjureDefinition) {
-        return new OpenAPI().components(ObjectGenerator.generateComponents(conjureDefinition));
+        return new OpenAPI()
+                .components(ObjectGenerator.generateComponents(conjureDefinition.getTypes()))
+                .paths(ServiceGenerator.generatePaths(conjureDefinition.getServices()));
     }
 
     private OpenApiGenerator() {}

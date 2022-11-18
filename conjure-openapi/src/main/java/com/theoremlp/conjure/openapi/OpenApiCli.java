@@ -15,15 +15,8 @@
  */
 package com.theoremlp.conjure.openapi;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.palantir.conjure.spec.ConjureDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.media.Schema;
 import java.io.File;
 import java.io.IOException;
 import picocli.CommandLine;
@@ -49,14 +42,6 @@ public final class OpenApiCli implements Runnable {
             mixinStandardHelpOptions = true,
             usageHelpWidth = 120)
     public static final class GenerateCommand implements Runnable {
-        private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper(new YAMLFactory()
-                        .enable(Feature.INDENT_ARRAYS_WITH_INDICATOR)
-                        .disable(Feature.WRITE_DOC_START_MARKER))
-                .registerModule(new Jdk8Module())
-                .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-                .enable(SerializationFeature.INDENT_OUTPUT)
-                .addMixIn(Schema.class, SchemaMixin.class);
-
         @CommandLine.Parameters(paramLabel = "<input>", description = "Path to the input IR file", index = "0")
         private String input;
 
@@ -69,9 +54,10 @@ public final class OpenApiCli implements Runnable {
         @Override
         public void run() {
             try {
-                ConjureDefinition conjureDefinition = OBJECT_MAPPER.readValue(new File(input), ConjureDefinition.class);
+                ConjureDefinition conjureDefinition =
+                        Mapper.OBJECT_MAPPER.readValue(new File(input), ConjureDefinition.class);
                 OpenAPI api = OpenApiGenerator.generate(conjureDefinition);
-                OBJECT_MAPPER.writeValue(new File(output, "openapi.yaml"), api);
+                Mapper.OBJECT_MAPPER.writeValue(new File(output, "openapi.yaml"), api);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -1,0 +1,47 @@
+types:
+  definitions:
+    default-package: com.theoremlp.test.openapi.api.v1
+    objects:
+      Body:
+        fields: {}
+
+services:
+  ExampleService:
+    name: Example service
+    package: com.theoremlp.test.openapi
+    base-path: /
+    default-auth: none
+    endpoints:
+      body:
+        docs: Endpoint documentation
+        http: POST /body
+        args:
+          body: Body
+
+      headers:
+        http: GET /headers
+        args:
+          header:
+            param-type: header
+            type: string
+            param-id: X-Theorem-Header
+
+      pathParams:
+        http: GET /path/{param1}/{param2}
+        args:
+          param1: string
+          param2: string
+
+      queryParams:
+        http: GET /query
+        args:
+          queryParam1:
+            param-type: query
+            type: integer
+          queryParam2:
+            param-type: query
+            type: string
+
+      response:
+        http: GET /response
+        returns: Body

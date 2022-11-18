@@ -1,0 +1,70 @@
+openapi: "3.0.1"
+paths:
+  /body:
+    post:
+      description: "Endpoint documentation"
+      operationId: "ExampleService#body"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Body"
+        required: true
+      deprecated: false
+  /response:
+    get:
+      operationId: "ExampleService#response"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Body"
+      deprecated: false
+  /headers:
+    get:
+      operationId: "ExampleService#headers"
+      parameters:
+        - name: "header"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      deprecated: false
+  /query:
+    get:
+      operationId: "ExampleService#queryParams"
+      parameters:
+        - name: "queryParam1"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "queryParam2"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+      deprecated: false
+  /path/{param1}/{param2}:
+    get:
+      operationId: "ExampleService#pathParams"
+      parameters:
+        - name: "param1"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "param2"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      deprecated: false
+components:
+  schemas:
+    Body:
+      required: []
+      type: "object"
+      properties: {}
