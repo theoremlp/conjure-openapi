@@ -1,7 +1,7 @@
 name: Update Deps
 on:
   # allow manual triggers
-  workflow_dispatch: {}
+  workflow_dispatch: { }
   # run every day at 10am
   schedule:
     - cron: '0 10 * * *'
@@ -13,9 +13,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.EULER_REPO_TOKEN }}
       - uses: ./.github/custom-actions/setup-gradle
+        with:
+          git-token: ${{ secrets.EULER_REPO_TOKEN }}
       - uses: markelliot/update-gradle-deps@v1
         with:
           push-to-repo-token: ${{ secrets.EULER_REPO_TOKEN }}
-          commit-user: ferozco
-          commit-email: felipe@theoremlp.com
+          primary-branch: main
+          commit-user: euler-theorem
+          commit-email: euler.t.gauss@theoremlp.com
+          label: automerge
