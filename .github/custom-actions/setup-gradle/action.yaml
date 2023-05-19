@@ -1,5 +1,9 @@
 name: 'Setup Gradle environment'
 description: Configures an environment to run Gradle tasks
+inputs:
+  git-token:
+    description: The github token to use for auth, EULER_REPO_TOKEN
+    required: true
 runs:
   using: composite
   steps:
@@ -7,16 +11,11 @@ runs:
       with:
         distribution: 'zulu'
         java-version: '17'
-    - uses: actions/cache@v3
-      with:
-        path: ~/.gradle/wrapper
-        key: gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-    - uses: actions/cache@v3
-      with:
-        path: ~/.gradle/caches
-        key: gradle-cache-v1-${{ hashFiles('versions.lock') }}-${{ hashFiles('build.gradle') }}
-    - name: Report gradle cache size
+    - uses: gradle/gradle-build-action@v2
+    - name: Setup github packages
       shell: bash
+      env:
+        TOKEN: ${{ inputs.git-token }}
       run: |
-        mkdir -p ~/.gradle/caches
-        du -hs ~/.gradle/caches
+        mkdir ~/.github
+        echo '{"username": "euler-theorem", "accessToken": "'"$TOKEN"'"}' > ~/.github/credentials.json
