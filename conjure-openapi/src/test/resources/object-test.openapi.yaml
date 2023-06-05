@@ -18,6 +18,7 @@ components:
           $ref: "#/components/schemas/PrimitiveObject"
     PrimitiveObject:
       required:
+        - "any_field"
         - "double_field"
         - "integer_field"
         - "string_field"
@@ -31,6 +32,7 @@ components:
         double_field:
           type: "number"
           format: "float"
+        any_field: {}
     ReferenceObject:
       required:
         - "primitive_field"

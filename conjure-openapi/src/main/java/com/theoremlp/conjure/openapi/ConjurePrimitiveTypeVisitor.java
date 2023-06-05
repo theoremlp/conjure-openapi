@@ -53,7 +53,7 @@ public final class ConjurePrimitiveTypeVisitor implements Visitor<Schema<?>> {
 
     @Override
     public Schema<?> visitAny() {
-        throw new IllegalStateException();
+        return new Schema<>();
     }
 
     @Override
