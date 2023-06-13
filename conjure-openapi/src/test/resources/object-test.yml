@@ -8,6 +8,7 @@ types:
           integer_field: integer
           double_field: double
           any_field: any
+          binary_field: binary
       ReferenceObject:
         fields:
           primitive_field: string

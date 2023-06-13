@@ -19,6 +19,7 @@ components:
     PrimitiveObject:
       required:
         - "any_field"
+        - "binary_field"
         - "double_field"
         - "integer_field"
         - "string_field"
@@ -33,6 +34,9 @@ components:
           type: "number"
           format: "float"
         any_field: {}
+        binary_field:
+          type: "string"
+          format: "byte"
     ReferenceObject:
       required:
         - "primitive_field"

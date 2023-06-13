@@ -48,7 +48,7 @@ public final class ConjurePrimitiveTypeVisitor implements Visitor<Schema<?>> {
 
     @Override
     public Schema<?> visitBinary() {
-        throw new IllegalStateException();
+        return new Schema<>().type("string").format("byte");
     }
 
     @Override
