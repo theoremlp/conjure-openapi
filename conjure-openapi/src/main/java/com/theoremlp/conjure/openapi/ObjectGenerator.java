@@ -101,19 +101,23 @@ final class ObjectGenerator {
         return Stream.concat(
                 value.getUnion().stream()
                         .sorted(Comparator.comparing(FieldDefinition::getFieldName))
-                        .map(elt -> Map.entry(
-                                elt.getFieldName().get() + "Wrapper",
-                                new Schema<>()
-                                        .type("object")
-                                        .properties(Stream.of(
-                                                        Map.entry("type", new Schema<>().type("string")),
-                                                        Map.entry(
-                                                                elt.getFieldName()
-                                                                        .get(),
-                                                                elt.getType().accept(ConjureTypeVisitor.INSTANCE)))
-                                                .collect(ImmutableMap.toImmutableMap(Entry::getKey, Entry::getValue)))
-                                        .required(List.of(
-                                                "type", elt.getFieldName().get())))),
+                        .map(fieldDef -> {
+                            Schema<?> typeField = new Schema<>()
+                                    .type("string")
+                                    ._enum(List.of(fieldDef.getFieldName().get()));
+                            Map<String, Schema<?>> properties = ImmutableMap.<String, Schema<?>>builder()
+                                    .put("type", typeField)
+                                    .put(
+                                            fieldDef.getFieldName().get(),
+                                            fieldDef.getType().accept(ConjureTypeVisitor.INSTANCE))
+                                    .buildOrThrow();
+                            return Map.entry(
+                                    fieldDef.getFieldName().get() + "Wrapper",
+                                    new Schema<>()
+                                            .type("object")
+                                            .properties(properties)
+                                            .required(List.copyOf(properties.keySet())));
+                        }),
                 Stream.of(Map.entry(
                         value.getTypeName().getName(),
                         new Schema<>()
