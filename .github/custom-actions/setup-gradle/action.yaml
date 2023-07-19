@@ -1,12 +1,5 @@
 name: "Setup Gradle environment"
 description: Configures an environment to run Gradle tasks
-inputs:
-  github-username:
-    description: The username corresponding to github-token
-    required: true
-  github-token:
-    description: The github token to use for auth
-    required: true
 runs:
   using: composite
   steps:
@@ -15,13 +8,3 @@ runs:
         distribution: "zulu"
         java-version: "17"
     - uses: gradle/gradle-build-action@v2
-    - name: Setup github packages
-      shell: bash
-      env:
-        USERNAME: ${{ inputs.github-username }}
-        ACCESS_TOKEN: ${{ inputs.github-token }}
-      run: |
-        mkdir ~/.github
-        cat <<EOS > ~/.github/credentials.json
-        {"username": "${USERNAME}", "accessToken": "${ACCESS_TOKEN}"}
-        EOS
