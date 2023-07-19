@@ -1,26 +1,36 @@
 name: Update Deps
 on:
   # allow manual triggers
-  workflow_dispatch: { }
+  workflow_dispatch: {}
   # run every day at 10am
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
+      - name: Get Token
+        id: get_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.THM_AUTOMATION_APP_ID }}
+          private_key: ${{ secrets.THM_AUTOMATION_PRIVATE_KEY }}
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.EULER_REPO_TOKEN }}
+          token: ${{ steps.get_token.outputs.token }}
       - uses: ./.github/custom-actions/setup-gradle
         with:
-          git-token: ${{ secrets.EULER_REPO_TOKEN }}
+          github-username: ${{ github.actor }}
+          github-token: ${{ github.token }}
       - uses: markelliot/update-gradle-deps@v1
         with:
-          push-to-repo-token: ${{ secrets.EULER_REPO_TOKEN }}
+          push-to-repo-token: ${{ steps.get_token.outputs.token }}
           primary-branch: main
-          commit-user: euler-theorem
-          commit-email: euler.t.gauss@theoremlp.com
+          commit-user: thm-automation[bot]
+          commit-email: thm-automation[bot]@users.noreply.github.com
           label: automerge
