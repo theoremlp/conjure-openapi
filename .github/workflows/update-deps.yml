@@ -24,9 +24,6 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.get_token.outputs.token }}
       - uses: ./.github/custom-actions/setup-gradle
-        with:
-          github-username: ${{ github.actor }}
-          github-token: ${{ github.token }}
       - uses: markelliot/update-gradle-deps@v1
         with:
           push-to-repo-token: ${{ steps.get_token.outputs.token }}
