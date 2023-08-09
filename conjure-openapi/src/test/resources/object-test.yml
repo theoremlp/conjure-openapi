@@ -1,4 +1,9 @@
 types:
+  imports:
+    JavaString:
+      base-type: string
+      external:
+        java: java.lang.String
   definitions:
     default-package: com.theoremlp.test.openapi.api.v1
     objects:
@@ -13,6 +18,9 @@ types:
         fields:
           primitive_field: string
           reference_field: PrimitiveObject
+      ExternalReferenceObject:
+        fields:
+          externalField: JavaString
       ObjectWithOptionals:
         fields:
           required_primitive_field: string

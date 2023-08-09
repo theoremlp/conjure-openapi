@@ -2,6 +2,13 @@ openapi: "3.0.1"
 paths: {}
 components:
   schemas:
+    ExternalReferenceObject:
+      required:
+        - "externalField"
+      type: "object"
+      properties:
+        externalField:
+          type: "string"
     ObjectWithOptionals:
       required:
         - "required_primitive_field"

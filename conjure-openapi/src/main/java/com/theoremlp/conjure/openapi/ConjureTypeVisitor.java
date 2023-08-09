@@ -66,8 +66,8 @@ public enum ConjureTypeVisitor implements Type.Visitor<Schema<?>> {
     }
 
     @Override
-    public Schema<?> visitExternal(ExternalReference _value) {
-        throw new IllegalStateException();
+    public Schema<?> visitExternal(ExternalReference value) {
+        return value.getFallback().accept(this);
     }
 
     @Override
