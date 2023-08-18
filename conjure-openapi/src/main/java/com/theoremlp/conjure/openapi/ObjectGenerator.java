@@ -16,6 +16,8 @@
 
 package com.theoremlp.conjure.openapi;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Converter;
 import com.google.common.collect.ImmutableMap;
 import com.palantir.conjure.spec.AliasDefinition;
 import com.palantir.conjure.spec.EnumDefinition;
@@ -36,6 +38,8 @@ import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 final class ObjectGenerator {
+    private static final Converter<String, String> LOWER_TO_UPPER_CAMEL =
+            CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.UPPER_CAMEL);
 
     static Components generateComponents(List<TypeDefinition> typeDefinitions) {
         return new Components()
@@ -112,7 +116,9 @@ final class ObjectGenerator {
                                             fieldDef.getType().accept(ConjureTypeVisitor.INSTANCE))
                                     .buildOrThrow();
                             return Map.entry(
-                                    fieldDef.getFieldName().get() + "Wrapper",
+                                    value.getTypeName().getName()
+                                            + LOWER_TO_UPPER_CAMEL.convert(
+                                                    fieldDef.getFieldName().get()) + "Wrapper",
                                     new Schema<>()
                                             .type("object")
                                             .properties(properties)

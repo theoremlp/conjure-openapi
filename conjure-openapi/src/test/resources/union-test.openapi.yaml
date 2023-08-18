@@ -13,7 +13,24 @@ components:
           format: "int32"
         fieldTwo:
           type: "string"
-    someIntegerWrapper:
+    AnotherUnionSomeObjectWrapper:
+      required:
+        - "type"
+        - "someObject"
+      type: "object"
+      properties:
+        type:
+          type: "string"
+          enum:
+            - "someObject"
+        someObject:
+          type: "string"
+    AnotherUnion:
+      discriminator:
+        propertyName: "type"
+      oneOf:
+        - $ref: "#/components/schemas/someObjectWrapper"
+    ObjectUnionSomeIntegerWrapper:
       required:
         - "type"
         - "someInteger"
@@ -26,7 +43,7 @@ components:
         someInteger:
           type: "integer"
           format: "int32"
-    someObjectWrapper:
+    ObjectUnionSomeObjectWrapper:
       required:
         - "type"
         - "someObject"
@@ -44,7 +61,7 @@ components:
       oneOf:
         - $ref: "#/components/schemas/someIntegerWrapper"
         - $ref: "#/components/schemas/someObjectWrapper"
-    doubleTypeWrapper:
+    PrimitiveUnionDoubleTypeWrapper:
       required:
         - "type"
         - "doubleType"
@@ -57,7 +74,7 @@ components:
         doubleType:
           type: "number"
           format: "float"
-    integerTypeWrapper:
+    PrimitiveUnionIntegerTypeWrapper:
       required:
         - "type"
         - "integerType"
@@ -70,7 +87,7 @@ components:
         integerType:
           type: "integer"
           format: "int32"
-    stringTypeWrapper:
+    PrimitiveUnionStringTypeWrapper:
       required:
         - "type"
         - "stringType"
