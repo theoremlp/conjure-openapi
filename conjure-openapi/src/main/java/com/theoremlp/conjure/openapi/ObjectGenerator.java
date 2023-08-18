@@ -128,16 +128,14 @@ final class ObjectGenerator {
                                 .oneOf(value.getUnion().stream()
                                         .sorted(Comparator.comparing(FieldDefinition::getFieldName))
                                         .map(elt -> new Schema<>()
-                                                .$ref("#/components/schemas/"
-                                                        + toUnionWrapperName(value, elt) ))
+                                                .$ref("#/components/schemas/" + toUnionWrapperName(value, elt)))
                                         .toList())
                                 .discriminator(new Discriminator().propertyName("type")))));
     }
 
     private static String toUnionWrapperName(UnionDefinition value, FieldDefinition fieldDef) {
         return value.getTypeName().getName()
-                + LOWER_TO_UPPER_CAMEL.convert(
-                fieldDef.getFieldName().get()) + "Wrapper";
+                + LOWER_TO_UPPER_CAMEL.convert(fieldDef.getFieldName().get()) + "Wrapper";
     }
 
     private ObjectGenerator() {}
