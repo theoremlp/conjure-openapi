@@ -15,3 +15,7 @@ types:
         union:
           someObject: AnObject
           someInteger: integer
+
+      AnotherUnion:
+        union:
+          someObject: string
