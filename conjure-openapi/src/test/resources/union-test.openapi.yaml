@@ -29,7 +29,7 @@ components:
       discriminator:
         propertyName: "type"
       oneOf:
-        - $ref: "#/components/schemas/someObjectWrapper"
+        - $ref: "#/components/schemas/AnotherUnionSomeObjectWrapper"
     ObjectUnionSomeIntegerWrapper:
       required:
         - "type"
@@ -59,8 +59,8 @@ components:
       discriminator:
         propertyName: "type"
       oneOf:
-        - $ref: "#/components/schemas/someIntegerWrapper"
-        - $ref: "#/components/schemas/someObjectWrapper"
+        - $ref: "#/components/schemas/ObjectUnionSomeIntegerWrapper"
+        - $ref: "#/components/schemas/ObjectUnionSomeObjectWrapper"
     PrimitiveUnionDoubleTypeWrapper:
       required:
         - "type"
@@ -103,6 +103,6 @@ components:
       discriminator:
         propertyName: "type"
       oneOf:
-        - $ref: "#/components/schemas/doubleTypeWrapper"
-        - $ref: "#/components/schemas/integerTypeWrapper"
-        - $ref: "#/components/schemas/stringTypeWrapper"
+        - $ref: "#/components/schemas/PrimitiveUnionDoubleTypeWrapper"
+        - $ref: "#/components/schemas/PrimitiveUnionIntegerTypeWrapper"
+        - $ref: "#/components/schemas/PrimitiveUnionStringTypeWrapper"
