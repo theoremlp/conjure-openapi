@@ -68,3 +68,8 @@ nexusPublishing {
         }
     }
 }
+
+// GCV is currently not compatible with Gradle 8 and so we're blocked on upgrading
+// https://github.com/palantir/gradle-consistent-versions/issues/1027
+tasks.updateGradleWrapper.enabled = false
+
