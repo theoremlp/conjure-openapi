@@ -12,6 +12,16 @@ it implements the contract described
         <input>      Path to the input IR file
         <output>     Output directory for generated source
 
+## Conjure Generator
+
+Run conjure-openapi through gradle-conjure using the [conjureGenerators](https://github.com/palantir/gradle-conjure?tab=readme-ov-file#configurations) configuration and specifying the jar we publish to [Maven Central](https://central.sonatype.com/artifact/com.theoremlp.conjure.openapi/conjure-openapi):
+
+```
+dependencies {
+    conjureGenerators 'com.theoremlp.conjure.openapi:conjure-openapi:<version>'
+}
+```
+
 ## Contributing
 
 To contribute to conjure-openapi:
