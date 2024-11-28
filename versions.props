@@ -9,4 +9,4 @@ org.assertj:assertj-core = 3.26.3
 org.junit.jupiter:* = 5.11.3
 org.mockito:* = 4.4.0
 info.picocli:picocli = 4.7.6
-com.fasterxml.jackson.*:* = 2.18.1
+com.fasterxml.jackson.*:* = 2.18.2
